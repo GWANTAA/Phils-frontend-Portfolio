@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Philemon Andrew Mwansumbule | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@200;300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <nav>
+    <div class="nav-logo">Phill's Portfolio</div>
+    <ul>
+      <li><a href="#about">Profile</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#qualifications">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-content">
+    <img src="images/ME.jpg" alt="Philemon Andrew Mwansumbule" loading="lazy">
+    <p class="subtitle">Data Scientist &nbsp;·&nbsp; Research Analyst &nbsp;·&nbsp; Full-Stack Developer &nbsp;·&nbsp; UI/UX Designer</p>
+    <h2>Philemon Andrew<br>Mwansumbule</h2>
+    <p>Turning raw data into intelligent solutions — one algorithm at a time.</p>
+    <button class="btn" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+      <span>Explore Projects</span>
+    </button>
+  </div>
+</header>
+
+
+<section id="about" class="glass">
+  <h2 class="section-title">Personal Profile</h2>
+  <div class="about-inner">
+    <p class="about-lead">
+      A passionate Data Science student with a sharp eye for patterns and a drive to build solutions
+      that matter. I bridge the gap between statistical depth and practical engineering — from
+      training predictive models to shipping full-stack web applications.
+    </p>
+    <p style="color:rgba(253,232,232,0.78);font-size:0.96rem;line-height:1.82;font-weight:300;">
+      My work spans machine learning pipelines, database architecture, cloud-hosted deployments,
+      and research-backed analysis. I am committed to continuous growth and to delivering
+      results that are not only technically sound but genuinely impactful.
+    </p>
+    <div class="about-stats">
+      <div class="stat-box"><div class="stat-num">2+</div><div class="stat-lbl">Years Coding</div></div>
+      <div class="stat-box"><div class="stat-num">3+</div><div class="stat-lbl">Projects Built</div></div>
+      <div class="stat-box"><div class="stat-num">3+</div><div class="stat-lbl">Technologies</div></div>
+      <div class="stat-box"><div class="stat-num">1</div><div class="stat-lbl">Degree Ongoing</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<section id="skills">
+  <h2 class="section-title">Skills</h2>
+
+  <div class="skill-tabs">
+    <button class="skill-tab active" onclick="switchTab('programming',this)">Programming</button>
+    <button class="skill-tab" onclick="switchTab('analytics',this)">Data Analytics</button>
+    <button class="skill-tab" onclick="switchTab('computing',this)">Computing</button>
+  </div>
+
+  
+  <div class="skill-group cards active" id="tab-programming"
+       style="grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:22px;">
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">HTML5</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🎨</div>
+      <div class="skill-name">CSS</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">JavaScript</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🟢</div>
+      <div class="skill-name">Node.js</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:74%"></div></div>
+      <div class="skill-level">Intermediate</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">SQL / MySQL</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐙</div>
+      <div class="skill-name">Git / GitHub</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔷</div>
+      <div class="skill-name">R Language</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+      <div class="skill-level">Intermediate</div>
+    </div>
+  </div>
+
+  
+  <div class="skill-group cards" id="tab-analytics"
+       style="grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:22px;">
+    <div class="skill-card">
+      <div class="skill-icon">🤖</div>
+      <div class="skill-name">Machine Learning</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Data Visualisation</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:86%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📈</div>
+      <div class="skill-name">Statistical Analysis</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:84%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🐼</div>
+      <div class="skill-name">Pandas / NumPy</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🧠</div>
+      <div class="skill-name">Deep Learning</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:65%"></div></div>
+      <div class="skill-level">Intermediate</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🗃️</div>
+      <div class="skill-name">Database Design</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Research Methods</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+      <div class="skill-level">Advanced</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📉</div>
+      <div class="skill-name">Power BI / Tableau</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+  </div>
+
+  
+  <div class="skill-group cards" id="tab-computing"
+       style="grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:22px;">
+    <div class="skill-card">
+      <div class="skill-icon">📝</div>
+      <div class="skill-name">MS Word</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+      <div class="skill-level">Expert</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">MS Excel</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+      <div class="skill-level">Expert</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📰</div>
+      <div class="skill-name">MS PowerPoint</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+      <div class="skill-level">Expert</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">☁️</div>
+      <div class="skill-name">Cloud Hosting</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-name">Linux / Bash</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+      <div class="skill-level">Intermediate</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">Network Fundamentals</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:68%"></div></div>
+      <div class="skill-level">Intermediate</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔒</div>
+      <div class="skill-name">Cybersecurity Basics</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:62%"></div></div>
+      <div class="skill-level">Foundational</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🖥️</div>
+      <div class="skill-name">IT Support</div>
+      <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+      <div class="skill-level">Proficient</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<section id="qualifications" class="glass">
+  <h2 class="section-title">Qualifications</h2>
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2022 – Present</div>
+        <div class="tl-title">Bachelor of Science in Data Science</div>
+        <div class="tl-inst">Eastern and Southern African Management Institute (EASTC), Arusha, Tanzania</div>
+        <p style="font-size:0.86rem;color:rgba(252,165,165,0.75);line-height:1.7;margin:8px 0;">
+          Core modules: Statistical Inference, Machine Learning, Database Systems, Research Methods,
+          Big Data Analytics, Data Mining, and Applied Mathematics.
+        </p>
+        <span class="tl-badge ongoing">Ongoing</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2025</div>
+        <div class="tl-title">Web & Cloud Computing</div>
+        <div class="tl-inst">Self-directed + Online Platforms (Coursera, AWS, Render, Vercel)</div>
+        <p style="font-size:0.86rem;color:rgba(252,165,165,0.75);line-height:1.7;margin:8px 0;">
+          Frontend & backend deployment, serverless architecture, containerisation, CI/CD pipelines,
+          and hosting on cloud platforms including AWS, Vercel, and Render.
+        </p>
+        <span class="tl-badge">Completed</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2024</div>
+        <div class="tl-title">Full-Stack Web Development</div>
+        <div class="tl-inst">Self-directed — HTML, CSS, JavaScript, Node.js, MySQL</div>
+        <p style="font-size:0.86rem;color:rgba(252,165,165,0.75);line-height:1.7;margin:8px 0;">
+          Built and deployed multi-page websites and REST API backends from scratch.
+          Proficient in responsive design, database-backed applications, and MVC architecture.
+        </p>
+        <span class="tl-badge">Completed</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-year">2023</div>
+        <div class="tl-title">Certificate in Computer Applications</div>
+        <div class="tl-inst">Secondary / Pre-University</div>
+        <p style="font-size:0.86rem;color:rgba(252,165,165,0.75);line-height:1.7;margin:8px 0;">
+          Microsoft Office Suite (Word, Excel, PowerPoint, Access), internet literacy,
+          spreadsheet modelling, and basic hardware troubleshooting.
+        </p>
+        <span class="tl-badge">Completed</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<section id="projects">
+  <h2 class="section-title">Projects</h2>
+  <div class="cards" id="project-container" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;">
+    <div class="empty-projects" id="empty-msg">
+      <p>✦ &nbsp; No projects yet — add them through the Admin Portal &nbsp; ✦</p>
+      <a href="admin.html" style="color:var(--gold);font-size:0.82rem;letter-spacing:1px;font-family:'Cinzel',serif;">Open Admin Portal →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<section id="contact" class="glass">
+  <h2 class="section-title">Get In Touch</h2>
+  <div class="contact-grid">
+
+    <div class="contact-info">
+      <div class="contact-row">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val"><a href="mailto:philandrewjackson618@gmail.com">philandrewjackson618@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-val">Dar es Salaam, Tanzania</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🎓</div>
+        <div>
+          <div class="contact-label">Institution</div>
+          <div class="contact-val">EASTC, Dar Es Salaam</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-val"><a href="https://github.com/GWANTAA" target="_blank">github.com/GWANTAA</a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">🐧</div>
+        <div>
+          <div class="contact-label">Twitter</div>
+          <div class="contact-val"><a href="https://Twitter.com/philleyofficial" target="_blank">Twitter.com/Philleyofficial</a></div>
+        </div>
+      </div>
+    </div>
+
+    <form id="contact-form" onsubmit="sendEmail(event)">
+      <input type="text" id="cf-name" placeholder="Your Full Name" required>
+      <input type="email" id="cf-email" placeholder="Your Email Address" required>
+      <input type="text" id="cf-subject" placeholder="Subject">
+      <textarea id="cf-message" rows="5" placeholder="Your message..." required></textarea>
+      <button type="submit" class="btn"><span>Send Message</span></button>
+      <p id="form-feedback" style="font-size:0.82rem;color:var(--gold);text-align:center;margin-top:8px;min-height:20px;"></p>
+    </form>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <strong>Philemon Andrew Mwansumbule</strong> &nbsp;·&nbsp; Hosted on Vercel &amp; Render</p>
+</footer>
+
+<script src="config.js"></script>
+<script>
+  const DEFAULT_API_BASE_URL = 'https://philemon-portfolio-backend.onrender.com';
+  const runtimeApiBaseUrl = new URLSearchParams(window.location.search).get('api');
+  const API_BASE_URL = (runtimeApiBaseUrl || window.PORTFOLIO_API_BASE_URL || DEFAULT_API_BASE_URL).replace(/\/$/, '');
+
+  
+  function switchTab(id, btn) {
+    document.querySelectorAll('.skill-group').forEach(g => g.classList.remove('active'));
+    document.querySelectorAll('.skill-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  
+  async function loadProjects() {
+    const container = document.getElementById('project-container');
+    const emptyMsg = document.getElementById('empty-msg');
+    let projects = [];
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/projects`);
+      if (!res.ok) throw new Error(`API returned ${res.status}`);
+      projects = await res.json();
+    } catch (error) {
+      const raw = localStorage.getItem('phil_projects');
+      projects = raw ? JSON.parse(raw) : [];
+    }
+
+    if (projects.length === 0) {
+      if (emptyMsg) emptyMsg.style.display = 'block';
+      return;
+    }
+    if (emptyMsg) emptyMsg.remove();
+
+    container.innerHTML = '';
+    projects.forEach(p => {
+      const isOnline = p.liveUrl && p.liveUrl.startsWith('http');
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.innerHTML = `
+        <div class="project-thumb">${p.emoji || '🖥️'}</div>
+        <div class="project-body">
+          <div class="project-title">${escHtml(p.title)}</div>
+          <div class="project-desc">${escHtml(p.description)}</div>
+          <div class="project-tags">${(p.tags||[]).map(t=>`<span class="tag">${escHtml(t)}</span>`).join('')}</div>
+        </div>
+        <div class="project-links">
+          ${p.liveUrl ? `<a class="proj-btn live" href="${escHtml(p.liveUrl)}" target="_blank">
+            <span class="status-dot ${isOnline?'online':'offline'}"></span>Live Demo</a>` : ''}
+          ${p.codeUrl ? `<a class="proj-btn code" href="${escHtml(p.codeUrl)}" target="_blank">Source Code</a>` : ''}
+        </div>`;
+      container.appendChild(card);
+    });
+  }
+
+  
+  function sendEmail(e) {
+    e.preventDefault();
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const subject = document.getElementById('cf-subject').value.trim() || 'Portfolio Contact';
+    const message = document.getElementById('cf-message').value.trim();
+    const body = encodeURIComponent(`Name: ${name}\nFrom: ${email}\n\n${message}`);
+    const sub  = encodeURIComponent(subject);
+    window.location.href = `mailto:philemonandrew@example.com?subject=${sub}&body=${body}`;
+    document.getElementById('form-feedback').textContent = '✦ Your email client has been opened.';
+    document.getElementById('contact-form').reset();
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  loadProjects();
+
+  
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(f => {
+          const w = f.style.width; f.style.width='0'; setTimeout(()=>f.style.width=w,80);
+        });
+      }
+    });
+  }, {threshold:0.25});
+  document.querySelectorAll('.skill-group').forEach(g => observer.observe(g));
+</script>
+</body>
+</html>

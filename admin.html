@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal | Phil Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sora:wght@200;300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    
+    .admin-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    
+    .login-box {
+      background: linear-gradient(150deg,rgba(140,35,35,0.22),rgba(8,2,2,0.75));
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 52px 44px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      backdrop-filter: blur(28px);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(220,38,38,0.10) inset;
+    }
+    .login-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 4px;
+      color: var(--primary-bright);
+      text-shadow: 0 0 20px var(--primary-glow);
+      margin-bottom: 6px;
+    }
+    .login-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 36px;
+    }
+    .login-box input {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .login-error {
+      color: #f87171;
+      font-size: 0.82rem;
+      margin-top: -8px;
+      margin-bottom: 14px;
+      min-height: 18px;
+      letter-spacing: 0.3px;
+    }
+
+    
+    .dashboard { display: none; width: 100%; max-width: 1100px; }
+    .dash-header {
+      display: top fixed;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .dash-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem;
+      color: #fff;
+      letter-spacing: 2px;
+    }
+    .dash-title span { color: var(--gold); }
+    .dash-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    
+    .dash-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .stat-card {
+      background: rgba(127,29,29,0.18);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+    }
+    .stat-card .label { font-size:0.72rem; letter-spacing:1.5px; color:var(--gold); font-family:'Cinzel',serif; text-transform:uppercase; margin-bottom:6px; }
+    .stat-card .value { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; color:var(--primary-bright); line-height:1; }
+    .stat-card .sub { font-size:0.76rem; color:var(--text-muted); margin-top:4px; }
+
+    
+    .proj-table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 14px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(212,168,67,0.20);
+      background: rgba(127,29,29,0.12);
+    }
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(220,38,38,0.12);
+      color: #fde8e8;
+      vertical-align: middle;
+    }
+    tr:hover td { background: rgba(127,29,29,0.12); }
+    .tbl-actions { display: flex; gap: 8px; }
+
+    
+    .btn-sm {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.24s;
+      border: none;
+    }
+    .btn-edit { background: rgba(220,38,38,0.20); border:1px solid var(--border); color:#fde8e8; }
+    .btn-edit:hover { background: rgba(220,38,38,0.40); border-color:var(--border-hot); }
+    .btn-del { background: rgba(127,29,29,0.30); border:1px solid rgba(127,29,29,0.50); color:#f87171; }
+    .btn-del:hover { background: rgba(185,28,28,0.45); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 9px 22px;
+      border-radius: 999px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.76rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.26s;
+    }
+    .btn-outline:hover { background: rgba(212,168,67,0.12); }
+    a.btn-outline { text-decoration: none; display: inline-flex; align-items: center; }
+
+    
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(4,1,1,0.82);
+      backdrop-filter: blur(8px);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: linear-gradient(150deg,rgba(140,35,35,0.26),rgba(8,2,2,0.90));
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 560px;
+      backdrop-filter: blur(28px);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.65);
+    }
+    .modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 24px;
+      letter-spacing: 1.5px;
+    }
+    .modal input, .modal textarea, .modal select {
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    .modal select {
+      padding: 17px 22px;
+      border: 1px solid rgba(220,38,38,0.28);
+      border-radius: 4px;
+      background: rgba(15,3,3,0.60);
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.92rem;
+    }
+    .modal-actions { display: flex; gap: 12px; margin-top: 8px; }
+    .modal-actions .btn { margin-top: 0; }
+    .modal-close { background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding:0; }
+    .modal-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+    .modal-head .modal-title { margin-bottom:0; }
+
+    
+    .badge-online { color:#4ade80; font-size:0.78rem; }
+    .badge-offline { color:#6b7280; font-size:0.78rem; }
+
+    
+    .feed-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; margin-top:8px; }
+    .feed-card {
+      background:rgba(127,29,29,0.14); border:1px solid var(--border); border-radius:var(--radius); padding:18px;
+    }
+    .feed-card .fc-title { font-family:'Cinzel',serif; font-size:0.88rem; color:#fff; margin-bottom:4px; }
+    .feed-card .fc-url { font-size:0.76rem; color:var(--text-muted); margin-bottom:10px; word-break:break-all; }
+    .feed-dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:5px; }
+    .feed-dot.online { background:#22c55e; box-shadow:0 0 8px rgba(34,197,94,0.70); animation:pulse-dot 2s infinite; }
+    .feed-dot.checking { background:#f59e0b; animation:pulse-dot 1s infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1}50%{opacity:0.4} }
+    .feed-status { font-size:0.76rem; }
+  </style>
+</head>
+<body>
+
+
+<div class="admin-wrap" id="login-view">
+  <div class="login-box">
+    <div class="login-logo">Admin</div>
+    <div class="login-sub">Phil Portfolio Portal</div>
+    <input type="text" id="admin-user" placeholder="Username" autocomplete="username">
+    <input type="password" id="admin-pass" placeholder="Password" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-error" id="login-err"></div>
+    <button class="btn" onclick="doLogin()" style="width:100%;justify-content:center;">
+      <span>Sign In</span>
+    </button>
+    <p style="margin-top:20px;font-size:0.76rem;color:rgba(252,165,165,0.45);letter-spacing:0.5px;">
+      Authorised access only
+    </p>
+  </div>
+</div>
+
+
+<div class="admin-wrap" id="dashboard-view" style="align-items:flex-start;padding-top:100px;">
+  <nav>
+    <div class="nav-logo">Phil.dev</div>
+    <ul>
+      <li><a href="index.html">← Portfolio</a></li>
+      <li><a href="#" onclick="doLogout()">Sign Out</a></li>
+    </ul>
+  </nav>
+
+  <div class="dashboard" id="dashboard">
+
+    <div class="dash-header">
+      <div class="dash-title">Admin <span>Dashboard</span></div>
+      <div class="dash-actions">
+        <button class="btn" onclick="openModal()"><span>+ Add Project</span></button>
+        <a href="index.html" class="btn-outline">View Portfolio</a>
+      </div>
+    </div>
+
+    
+    <div class="dash-stats">
+      <div class="stat-card">
+        <div class="label">Total Projects</div>
+        <div class="value" id="stat-total">0</div>
+        <div class="sub">In portfolio</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Live Projects</div>
+        <div class="value" id="stat-live">0</div>
+        <div class="sub">With live URL</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">With Source</div>
+        <div class="value" id="stat-code">0</div>
+        <div class="sub">GitHub / code link</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Last Updated</div>
+        <div class="value" id="stat-date" style="font-size:1.1rem;line-height:1.4;margin-top:4px;">—</div>
+        <div class="sub">Project edit</div>
+      </div>
+    </div>
+
+    
+    <h3 style="font-family:'Cinzel',serif;letter-spacing:2px;color:#fff;margin-bottom:18px;font-size:1rem;">
+      Projects
+    </h3>
+    <div class="proj-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Icon</th>
+            <th>Title</th>
+            <th>Tags</th>
+            <th>Live URL</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="proj-table-body">
+          <tr id="no-proj-row">
+            <td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">
+              No projects yet — click + Add Project above.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="divider" style="margin:48px 0 36px;"></div>
+
+    
+    <h3 style="font-family:'Cinzel',serif;letter-spacing:2px;color:#fff;margin-bottom:6px;font-size:1rem;">
+      Live Deployment Feed
+    </h3>
+    <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:22px;">
+      Checks reachability of all project live URLs in real time.
+    </p>
+    <button class="btn-outline" onclick="runFeedCheck()" style="margin-bottom:22px;">↻ Refresh Status</button>
+    <div class="feed-grid" id="feed-grid">
+      <p style="color:rgba(252,165,165,0.45);font-size:0.86rem;">Add projects with live URLs to see feed.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="proj-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modal-title">Add New Project</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <input type="hidden" id="edit-index">
+    <input type="text" id="p-emoji" placeholder="Emoji icon e.g. 🖥️">
+    <input type="text" id="p-title" placeholder="Project Title *" required>
+    <textarea id="p-desc" rows="3" placeholder="Short description..."></textarea>
+    <input type="text" id="p-tags" placeholder="Tags (comma-separated) e.g. Python, ML, API">
+    <input type="text" id="p-live" placeholder="Live URL (https://...)">
+    <input type="text" id="p-code" placeholder="Source Code URL (https://github.com/...)">
+    <div class="modal-actions">
+      <button class="btn" onclick="saveProject()" style="flex:1;justify-content:center;margin-top:0;"><span>Save Project</span></button>
+      <button class="btn-outline" onclick="closeModal()">Cancel</button>
+    </div>
+    <p id="modal-err" style="color:#f87171;font-size:0.80rem;margin-top:10px;min-height:16px;"></p>
+  </div>
+</div>
+
+<script>
+  
+  const ADMIN_USER = 'phil';
+  const ADMIN_PASS = 'phil2026';
+
+  
+  function doLogin() {
+    const u = document.getElementById('admin-user').value.trim();
+    const p = document.getElementById('admin-pass').value;
+    const err = document.getElementById('login-err');
+    if (u === ADMIN_USER && p === ADMIN_PASS) {
+      sessionStorage.setItem('phil_auth', '1');
+      showDashboard();
+    } else {
+      err.textContent = 'Incorrect credentials. Please try again.';
+      document.getElementById('admin-pass').value = '';
+    }
+  }
+
+  function doLogout() {
+    sessionStorage.removeItem('phil_auth');
+    document.getElementById('dashboard-view').style.display = 'none';
+    document.getElementById('login-view').style.display = 'flex';
+  }
+
+  function showDashboard() {
+    document.getElementById('login-view').style.display = 'none';
+    document.getElementById('dashboard-view').style.display = 'flex';
+    document.getElementById('dashboard').style.display = 'block';
+    refreshTable();
+    updateStats();
+    runFeedCheck();
+  }
+
+  
+  if (sessionStorage.getItem('phil_auth') === '1') showDashboard();
+
+  
+  function getProjects() {
+    const raw = localStorage.getItem('phil_projects');
+    return raw ? JSON.parse(raw) : [];
+  }
+  function saveProjects(list) {
+    localStorage.setItem('phil_projects', JSON.stringify(list));
+    localStorage.setItem('phil_last_edit', new Date().toLocaleDateString('en-GB'));
+  }
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  
+  function refreshTable() {
+    const projects = getProjects();
+    const tbody = document.getElementById('proj-table-body');
+    const noRow = document.getElementById('no-proj-row');
+
+    if (projects.length === 0) {
+      tbody.innerHTML = '';
+      tbody.innerHTML = `<tr id="no-proj-row"><td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">No projects yet — click + Add Project above.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = '';
+    projects.forEach((p, i) => {
+      const tr = document.createElement('tr');
+      const tags = (p.tags||[]).map(t=>`<span style="background:rgba(220,38,38,0.18);border:1px solid rgba(220,38,38,0.28);padding:2px 8px;border-radius:999px;font-size:0.70rem;color:var(--rose-light);">${escHtml(t)}</span>`).join(' ');
+      tr.innerHTML = `
+        <td style="font-size:1.5rem;">${p.emoji||'🖥️'}</td>
+        <td style="font-weight:500;">${escHtml(p.title)}</td>
+        <td>${tags}</td>
+        <td>${p.liveUrl ? `<a href="${escHtml(p.liveUrl)}" target="_blank" style="color:var(--rose-light);font-size:0.80rem;">${escHtml(p.liveUrl.replace('https://',''))}</a>` : '<span style="color:rgba(252,165,165,0.35);">—</span>'}</td>
+        <td><span class="badge-online" id="feed-badge-${i}">●  Checking…</span></td>
+        <td>
+          <div class="tbl-actions">
+            <button class="btn-sm btn-edit" onclick="editProject(${i})">Edit</button>
+            <button class="btn-sm btn-del" onclick="deleteProject(${i})">Delete</button>
+          </div>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+  }
+
+  
+  function updateStats() {
+    const p = getProjects();
+    document.getElementById('stat-total').textContent = p.length;
+    document.getElementById('stat-live').textContent  = p.filter(x=>x.liveUrl).length;
+    document.getElementById('stat-code').textContent  = p.filter(x=>x.codeUrl).length;
+    const d = localStorage.getItem('phil_last_edit') || '—';
+    document.getElementById('stat-date').textContent = d;
+  }
+
+  
+  function openModal(index) {
+    document.getElementById('modal-err').textContent = '';
+    if (index !== undefined) {
+      const p = getProjects()[index];
+      document.getElementById('modal-title').textContent = 'Edit Project';
+      document.getElementById('edit-index').value = index;
+      document.getElementById('p-emoji').value  = p.emoji || '';
+      document.getElementById('p-title').value  = p.title;
+      document.getElementById('p-desc').value   = p.description || '';
+      document.getElementById('p-tags').value   = (p.tags||[]).join(', ');
+      document.getElementById('p-live').value   = p.liveUrl || '';
+      document.getElementById('p-code').value   = p.codeUrl || '';
+    } else {
+      document.getElementById('modal-title').textContent = 'Add New Project';
+      document.getElementById('edit-index').value = '';
+      ['p-emoji','p-title','p-desc','p-tags','p-live','p-code'].forEach(id => document.getElementById(id).value = '');
+    }
+    document.getElementById('proj-modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('proj-modal').classList.remove('open');
+  }
+
+  function saveProject() {
+    const title = document.getElementById('p-title').value.trim();
+    if (!title) { document.getElementById('modal-err').textContent = 'Project title is required.'; return; }
+    const idx   = document.getElementById('edit-index').value;
+    const obj = {
+      emoji:       document.getElementById('p-emoji').value.trim() || '🖥️',
+      title,
+      description: document.getElementById('p-desc').value.trim(),
+      tags:        document.getElementById('p-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+      liveUrl:     document.getElementById('p-live').value.trim(),
+      codeUrl:     document.getElementById('p-code').value.trim(),
+    };
+    const list = getProjects();
+    if (idx !== '') { list[parseInt(idx)] = obj; } else { list.push(obj); }
+    saveProjects(list);
+    closeModal();
+    refreshTable();
+    updateStats();
+    runFeedCheck();
+  }
+
+  function editProject(i) { openModal(i); }
+
+  function deleteProject(i) {
+    if (!confirm('Delete this project?')) return;
+    const list = getProjects();
+    list.splice(i, 1);
+    saveProjects(list);
+    refreshTable();
+    updateStats();
+    runFeedCheck();
+  }
+
+  
+  function runFeedCheck() {
+    const projects = getProjects().filter(p => p.liveUrl);
+    const grid = document.getElementById('feed-grid');
+
+    if (projects.length === 0) {
+      grid.innerHTML = '<p style="color:rgba(252,165,165,0.45);font-size:0.86rem;">Add projects with live URLs to see feed.</p>';
+      return;
+    }
+
+    grid.innerHTML = '';
+    projects.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'feed-card';
+      card.id = 'fc-' + i;
+      card.innerHTML = `
+        <div class="fc-title">${escHtml(p.title)}</div>
+        <div class="fc-url">${escHtml(p.liveUrl)}</div>
+        <div class="feed-status"><span class="feed-dot checking"></span> Checking…</div>`;
+      grid.appendChild(card);
+
+      
+      const img = new Image();
+      const timeout = setTimeout(() => {
+        updateFeedCard(i, false);
+        updateTableBadge(i, false);
+      }, 7000);
+
+      img.onload = () => { clearTimeout(timeout); updateFeedCard(i, true); updateTableBadge(i, true); };
+      img.onerror = () => {
+        
+        clearTimeout(timeout);
+        fetch(p.liveUrl, { method:'HEAD', mode:'no-cors' })
+          .then(() => { updateFeedCard(i, true); updateTableBadge(i, true); })
+          .catch(() => { updateFeedCard(i, false); updateTableBadge(i, false); });
+      };
+      img.src = p.liveUrl + '/favicon.ico?_=' + Date.now();
+    });
+  }
+
+  function updateFeedCard(i, online) {
+    const card = document.getElementById('fc-' + i);
+    if (!card) return;
+    const dot = online
+      ? '<span class="feed-dot online"></span>'
+      : '<span class="feed-dot" style="background:#6b7280;"></span>';
+    const label = online
+      ? '<span style="color:#4ade80;">Online</span>'
+      : '<span style="color:#6b7280;">Unreachable from browser</span>';
+    card.querySelector('.feed-status').innerHTML = dot + label;
+  }
+
+  function updateTableBadge(i, online) {
+    const el = document.getElementById('feed-badge-' + i);
+    if (!el) return;
+    el.className = online ? 'badge-online' : 'badge-offline';
+    el.textContent = online ? '●  Online' : '●  Unreachable';
+  }
+
+  
+  document.getElementById('proj-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+</script>
+</body>
+</html>
