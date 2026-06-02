@@ -9,13 +9,15 @@
   <link rel="stylesheet" href="style.css">
   <style>
     .admin-wrap {min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 20px; position: relative; z-index: 1;}
-    .login-box {background: linear-gradient(150deg,rgba(140,35,35,0.22),rgba(8,2,2,0.75)); border: 1px solid var(--border-gold); border-radius: 20px; padding: 52px 44px; width: 100%; max-width: 420px; text-align: center; backdrop-filter: blur(28px); box-shadow: 0 40px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(220,38,38,0.10) inset;}
+    .login-box {background: linear-gradient(150deg,rgba(140,35,35,0.22),rgba(8,2,2,0.75)); border: 1px solid var(--border-gold); border-radius: 20px; padding: 52px 44px; width: 100%; max-width: 420px;}
     .login-logo {font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; letter-spacing: 4px; color: var(--primary-bright); text-shadow: 0 0 20px var(--primary-glow); margin-bottom: 6px;}
     .login-sub {font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 36px;}
     .login-box input {width: 100%; margin-bottom: 16px;}
     .login-error {color: #f87171; font-size: 0.82rem; margin-top: -8px; margin-bottom: 14px; min-height: 18px; letter-spacing: 0.3px;}
+    .loading-spinner {display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.3); border-top: 2px solid #fff; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px;}
+    @keyframes spin {to {transform: rotate(360deg);}}
     .dashboard {display: none; width: 100%; max-width: 1100px;}
-    .dash-header {display: top fixed; justify-content: space-between; align-items: center; margin-bottom: 36px; flex-wrap: wrap; gap: 16px;}
+    .dash-header {display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; flex-wrap: wrap; gap: 16px;}
     .dash-title {font-family: 'Cinzel', serif; font-size: 1.5rem; color: #fff; letter-spacing: 2px;}
     .dash-title span {color: var(--gold);}
     .dash-actions {display: flex; gap: 12px; flex-wrap: wrap;}
@@ -26,7 +28,7 @@
     .stat-card .sub {font-size:0.76rem; color:var(--text-muted); margin-top:4px;}
     .proj-table-wrap {overflow-x: auto;}
     table {width: 100%; border-collapse: collapse; font-size: 0.88rem;}
-    th {font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 1.8px; text-transform: uppercase; color: var(--gold); padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(212,168,67,0.20); background: rgba(127,29,29,0.12);}
+    th {font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 1.8px; text-transform: uppercase; color: var(--gold); padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(220,38,38,0.28);}
     td {padding: 14px 16px; border-bottom: 1px solid rgba(220,38,38,0.12); color: #fde8e8; vertical-align: middle;}
     tr:hover td {background: rgba(127,29,29,0.12);}
     .tbl-actions {display: flex; gap: 8px;}
@@ -35,12 +37,12 @@
     .btn-edit:hover {background: rgba(220,38,38,0.40); border-color:var(--border-hot);}
     .btn-del {background: rgba(127,29,29,0.30); border:1px solid rgba(127,29,29,0.50); color:#f87171;}
     .btn-del:hover {background: rgba(185,28,28,0.45);}
-    .btn-outline {background: transparent; border: 1px solid var(--border-gold); color: var(--gold-light); padding: 9px 22px; border-radius: 999px; font-family: 'Cinzel', serif; font-size: 0.76rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: all 0.26s;}
+    .btn-outline {background: transparent; border: 1px solid var(--border-gold); color: var(--gold-light); padding: 9px 22px; border-radius: 999px; font-family: 'Cinzel', serif; font-size: 0.76rem; cursor: pointer; transition: all 0.24s;}
     .btn-outline:hover {background: rgba(212,168,67,0.12);}
     a.btn-outline {text-decoration: none; display: inline-flex; align-items: center;}
     .modal-overlay {display: none; position: fixed; inset: 0; background: rgba(4,1,1,0.82); backdrop-filter: blur(8px); z-index: 9000; align-items: center; justify-content: center; padding: 20px;}
     .modal-overlay.open {display: flex;}
-    .modal {background: linear-gradient(150deg,rgba(140,35,35,0.26),rgba(8,2,2,0.90)); border: 1px solid var(--border-gold); border-radius: 18px; padding: 40px 36px; width: 100%; max-width: 560px; backdrop-filter: blur(28px); box-shadow: 0 40px 80px rgba(0,0,0,0.65);}
+    .modal {background: linear-gradient(150deg,rgba(140,35,35,0.26),rgba(8,2,2,0.90)); border: 1px solid var(--border-gold); border-radius: 18px; padding: 40px 36px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;}
     .modal-title {font-family: 'Cinzel', serif; font-size: 1.2rem; color: #fff; margin-bottom: 24px; letter-spacing: 1.5px;}
     .modal input, .modal textarea, .modal select {width: 100%; margin-bottom: 14px;}
     .modal select {padding: 17px 22px; border: 1px solid rgba(220,38,38,0.28); border-radius: 4px; background: rgba(15,3,3,0.60); color: #fff; font-family: 'Sora', sans-serif; font-size: 0.92rem;}
@@ -60,6 +62,7 @@
     .feed-dot.checking {background:#f59e0b; animation:pulse-dot 1s infinite;}
     @keyframes pulse-dot {0%,100%{opacity:1}50%{opacity:0.4}}
     .feed-status {font-size:0.76rem;}
+    .divider {height: 1px; background: linear-gradient(90deg,transparent,rgba(220,38,38,0.28),transparent);}
   </style>
 </head>
 <body>
@@ -71,7 +74,7 @@
     <input type="text" id="admin-user" placeholder="Username" autocomplete="username">
     <input type="password" id="admin-pass" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
     <div class="login-error" id="login-err"></div>
-    <button class="btn" onclick="doLogin()" style="width:100%;justify-content:center;"><span>Sign In</span></button>
+    <button class="btn" onclick="doLogin()" style="width:100%;justify-content:center;"><span id="login-btn-text">Sign In</span></button>
     <p style="margin-top:20px;font-size:0.76rem;color:rgba(252,165,165,0.45);letter-spacing:0.5px;">Authorised access only</p>
   </div>
 </div>
@@ -132,7 +135,7 @@
         </thead>
         <tbody id="proj-table-body">
           <tr id="no-proj-row">
-            <td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">No projects yet — click + Add Project above.</td>
+            <td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">Loading projects...</td>
           </tr>
         </tbody>
       </table>
@@ -163,7 +166,7 @@
     <input type="text" id="p-live" placeholder="Live URL (https://...)">
     <input type="text" id="p-code" placeholder="Source Code URL (https://github.com/...)">
     <div class="modal-actions">
-      <button class="btn" onclick="saveProject()" style="flex:1;justify-content:center;margin-top:0;"><span>Save Project</span></button>
+      <button class="btn" onclick="saveProject()" style="flex:1;justify-content:center;margin-top:0;"><span id="save-btn-text">Save Project</span></button>
       <button class="btn-outline" onclick="closeModal()">Cancel</button>
     </div>
     <p id="modal-err" style="color:#f87171;font-size:0.80rem;margin-top:10px;min-height:16px;"></p>
@@ -172,24 +175,39 @@
 
 <script src="config.js"></script>
 <script>
+  // Configuration
   const ADMIN_USER = window.PORTFOLIO_ADMIN_USER || 'phil';
   const ADMIN_PASS = window.PORTFOLIO_ADMIN_PASS || 'phil2026';
   const API_BASE_URL = (window.PORTFOLIO_API_BASE_URL || 'https://phils-backend-portfolio.onrender.com').replace(/\/$/, '');
+  
+  let projectsCache = [];
+  let authToken = null;
 
+  // ============ AUTHENTICATION ============
   async function doLogin() {
     const u = document.getElementById('admin-user').value.trim();
     const p = document.getElementById('admin-pass').value;
     const err = document.getElementById('login-err');
+    const loginBtn = document.getElementById('login-btn-text');
+    const originalText = loginBtn.textContent;
+
+    loginBtn.innerHTML = '<span class="loading-spinner"></span>Signing in...';
+    err.textContent = '';
 
     try {
+      // Try backend authentication first
       const res = await fetch(`${API_BASE_URL}/api/admin/login`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username: u, password: p})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
       });
+
       if (res.ok) {
         const data = await res.json();
-        sessionStorage.setItem('phil_auth', data.token || '1');
+        authToken = data.token || '1';
+        sessionStorage.setItem('phil_auth_token', authToken);
+        sessionStorage.setItem('phil_auth', '1');
+        loginBtn.textContent = originalText;
         showDashboard();
         return;
       }
@@ -197,19 +215,28 @@
       console.warn('Backend auth unavailable, falling back to frontend validation');
     }
 
+    // Fallback to frontend validation
     if (u === ADMIN_USER && p === ADMIN_PASS) {
+      authToken = '1';
       sessionStorage.setItem('phil_auth', '1');
+      loginBtn.textContent = originalText;
       showDashboard();
     } else {
       err.textContent = 'Incorrect credentials. Please try again.';
       document.getElementById('admin-pass').value = '';
+      loginBtn.textContent = originalText;
     }
   }
 
   function doLogout() {
     sessionStorage.removeItem('phil_auth');
+    sessionStorage.removeItem('phil_auth_token');
+    authToken = null;
+    projectsCache = [];
     document.getElementById('dashboard-view').style.display = 'none';
     document.getElementById('login-view').style.display = 'flex';
+    document.getElementById('admin-user').value = '';
+    document.getElementById('admin-pass').value = '';
   }
 
   function showDashboard() {
@@ -221,67 +248,246 @@
     runFeedCheck();
   }
 
-  if (sessionStorage.getItem('phil_auth') === '1') showDashboard();
+  // Check if already authenticated
+  if (sessionStorage.getItem('phil_auth') === '1') {
+    authToken = sessionStorage.getItem('phil_auth_token') || '1';
+    showDashboard();
+  }
 
-  function getProjects() {const raw = localStorage.getItem('phil_projects'); return raw ? JSON.parse(raw) : [];}
-  function saveProjects(list) {localStorage.setItem('phil_projects', JSON.stringify(list)); localStorage.setItem('phil_last_edit', new Date().toLocaleDateString('en-GB'));}
-  function escHtml(s) {return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  // ============ PROJECT MANAGEMENT ============
+  async function getProjects() {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/projects`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authToken ? `Bearer ${authToken}` : ''
+        }
+      });
 
-  function refreshTable() {
-    const projects = getProjects();
+      if (res.ok) {
+        const data = await res.json();
+        projectsCache = data.projects || [];
+        return projectsCache;
+      }
+    } catch (error) {
+      console.warn('Failed to fetch projects from backend:', error);
+    }
+
+    // Fallback to localStorage
+    try {
+      const raw = localStorage.getItem('phil_projects');
+      projectsCache = raw ? JSON.parse(raw) : [];
+      return projectsCache;
+    } catch (e) {
+      console.warn('localStorage fallback failed:', e);
+      return [];
+    }
+  }
+
+  async function saveProjects(list) {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/projects`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authToken ? `Bearer ${authToken}` : ''
+        },
+        body: JSON.stringify({ projects: list })
+      });
+
+      if (res.ok) {
+        projectsCache = list;
+        localStorage.setItem('phil_projects', JSON.stringify(list));
+        localStorage.setItem('phil_last_edit', new Date().toLocaleDateString('en-GB'));
+        return true;
+      }
+    } catch (error) {
+      console.warn('Failed to save projects to backend:', error);
+    }
+
+    // Fallback to localStorage only
+    try {
+      localStorage.setItem('phil_projects', JSON.stringify(list));
+      localStorage.setItem('phil_last_edit', new Date().toLocaleDateString('en-GB'));
+      projectsCache = list;
+      return true;
+    } catch (e) {
+      console.error('localStorage save failed:', e);
+      return false;
+    }
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  async function refreshTable() {
+    const projects = await getProjects();
     const tbody = document.getElementById('proj-table-body');
-    if (projects.length === 0) {tbody.innerHTML = `<tr id="no-proj-row"><td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">No projects yet — click + Add Project above.</td></tr>`; return;}
+
+    if (projects.length === 0) {
+      tbody.innerHTML = '<tr id="no-proj-row"><td colspan="6" style="text-align:center;color:rgba(252,165,165,0.45);padding:36px;">No projects yet — click + Add Project above.</td></tr>';
+      return;
+    }
+
     tbody.innerHTML = '';
     projects.forEach((p, i) => {
       const tr = document.createElement('tr');
-      const tags = (p.tags||[]).map(t=>`<span style="background:rgba(220,38,38,0.18);border:1px solid rgba(220,38,38,0.28);padding:2px 8px;border-radius:999px;font-size:0.70rem;color:var(--rose-light);">${escHtml(t)}</span>`).join('');
-      tr.innerHTML = `<td style="font-size:1.5rem;">${p.emoji||'🖥️'}</td><td style="font-weight:500;">${escHtml(p.title)}</td><td>${tags}</td><td>${p.liveUrl ? `<a href="${escHtml(p.liveUrl)}" target="_blank" style="color:var(--rose-light);font-size:0.80rem;">${escHtml(p.liveUrl.replace('https://',''))}</a>` : '<span style="color:rgba(252,165,165,0.35);">—</span>'}</td><td><span class="badge-online" id="feed-badge-${i}">●  Checking…</span></td><td><div class="tbl-actions"><button class="btn-sm btn-edit" onclick="editProject(${i})">Edit</button><button class="btn-sm btn-del" onclick="deleteProject(${i})">Delete</button></div></td>`;
+      const tags = (p.tags || []).map(t => `<span style="background:rgba(220,38,38,0.18);border:1px solid rgba(220,38,38,0.28);padding:2px 8px;border-radius:999px;font-size:0.70rem;color:var(--rose-light);margin-right:4px;display:inline-block;">${escHtml(t)}</span>`).join('');
+      const liveLink = p.liveUrl ? `<a href="${escHtml(p.liveUrl)}" target="_blank" style="color:var(--gold);text-decoration:none;word-break:break-all;">${escHtml(p.liveUrl.replace(/^https?:\/\//, ''))}</a>` : '—';
+      const statusBadge = p.liveUrl ? `<span class="badge-online" id="feed-badge-${i}">●  Checking…</span>` : '<span style="color:#6b7280;font-size:0.78rem;">No URL</span>';
+      
+      tr.innerHTML = `<td style="font-size:1.5rem;">${p.emoji || '🖥️'}</td><td style="font-weight:500;">${escHtml(p.title)}</td><td>${tags}</td><td>${liveLink}</td><td>${statusBadge}</td><td><div class="tbl-actions"><button class="btn-sm btn-edit" onclick="editProject(${i})">Edit</button><button class="btn-sm btn-del" onclick="deleteProject(${i})">Delete</button></div></td>`;
       tbody.appendChild(tr);
     });
   }
 
-  function updateStats() {const p = getProjects(); document.getElementById('stat-total').textContent = p.length; document.getElementById('stat-live').textContent = p.filter(x=>x.liveUrl).length; document.getElementById('stat-code').textContent = p.filter(x=>x.codeUrl).length; const d = localStorage.getItem('phil_last_edit') || '—'; document.getElementById('stat-date').textContent = d;}
+  async function updateStats() {
+    const p = await getProjects();
+    document.getElementById('stat-total').textContent = p.length;
+    document.getElementById('stat-live').textContent = p.filter(x => x.liveUrl).length;
+    document.getElementById('stat-code').textContent = p.filter(x => x.codeUrl).length;
+    
+    const lastEdit = localStorage.getItem('phil_last_edit') || '—';
+    document.getElementById('stat-date').textContent = lastEdit;
+  }
 
   function openModal(index) {
     document.getElementById('modal-err').textContent = '';
-    if (index !== undefined) {const p = getProjects()[index]; document.getElementById('modal-title').textContent = 'Edit Project'; document.getElementById('edit-index').value = index; document.getElementById('p-emoji').value = p.emoji || ''; document.getElementById('p-title').value = p.title; document.getElementById('p-desc').value = p.description || ''; document.getElementById('p-tags').value = (p.tags||[]).join(', '); document.getElementById('p-live').value = p.liveUrl || ''; document.getElementById('p-code').value = p.codeUrl || '';} else {document.getElementById('modal-title').textContent = 'Add New Project'; document.getElementById('edit-index').value = ''; ['p-emoji','p-title','p-desc','p-tags','p-live','p-code'].forEach(id => document.getElementById(id).value = '');}
+    document.getElementById('edit-index').value = '';
+    document.getElementById('p-emoji').value = '';
+    document.getElementById('p-title').value = '';
+    document.getElementById('p-desc').value = '';
+    document.getElementById('p-tags').value = '';
+    document.getElementById('p-live').value = '';
+    document.getElementById('p-code').value = '';
+    document.getElementById('modal-title').textContent = 'Add New Project';
+
+    if (index !== undefined) {
+      const p = projectsCache[index];
+      if (p) {
+        document.getElementById('modal-title').textContent = 'Edit Project';
+        document.getElementById('edit-index').value = index;
+        document.getElementById('p-emoji').value = p.emoji || '';
+        document.getElementById('p-title').value = p.title || '';
+        document.getElementById('p-desc').value = p.description || '';
+        document.getElementById('p-tags').value = (p.tags || []).join(', ');
+        document.getElementById('p-live').value = p.liveUrl || '';
+        document.getElementById('p-code').value = p.codeUrl || '';
+      }
+    }
+
     document.getElementById('proj-modal').classList.add('open');
   }
 
-  function closeModal() {document.getElementById('proj-modal').classList.remove('open');}
-
-  function saveProject() {
-    const title = document.getElementById('p-title').value.trim();
-    if (!title) {document.getElementById('modal-err').textContent = 'Project title is required.'; return;}
-    const idx = document.getElementById('edit-index').value;
-    const obj = {emoji: document.getElementById('p-emoji').value.trim() || '🖥️', title, description: document.getElementById('p-desc').value.trim(), tags: document.getElementById('p-tags').value.split(',').map(t=>t.trim()).filter(Boolean), liveUrl: document.getElementById('p-live').value.trim(), codeUrl: document.getElementById('p-code').value.trim()};
-    const list = getProjects();
-    if (idx !== '') {list[parseInt(idx)] = obj;} else {list.push(obj);}
-    saveProjects(list);
-    closeModal();
-    refreshTable();
-    updateStats();
-    runFeedCheck();
+  function closeModal() {
+    document.getElementById('proj-modal').classList.remove('open');
   }
 
-  function editProject(i) {openModal(i);}
-  function deleteProject(i) {if (!confirm('Delete this project?')) return; const list = getProjects(); list.splice(i, 1); saveProjects(list); refreshTable(); updateStats(); runFeedCheck();}
+  async function saveProject() {
+    const title = document.getElementById('p-title').value.trim();
+    if (!title) {
+      document.getElementById('modal-err').textContent = 'Project title is required.';
+      return;
+    }
 
-  function runFeedCheck() {
-    const projects = getProjects().filter(p => p.liveUrl);
+    const idx = document.getElementById('edit-index').value;
+    const obj = {
+      emoji: document.getElementById('p-emoji').value.trim() || '🖥️',
+      title,
+      description: document.getElementById('p-desc').value.trim(),
+      tags: document.getElementById('p-tags').value.split(',').map(t => t.trim()).filter(t => t),
+      liveUrl: document.getElementById('p-live').value.trim() || null,
+      codeUrl: document.getElementById('p-code').value.trim() || null
+    };
+
+    const list = projectsCache.length > 0 ? projectsCache : await getProjects();
+    if (idx !== '') {
+      list[parseInt(idx)] = obj;
+    } else {
+      list.push(obj);
+    }
+
+    const saveBtn = document.querySelector('#proj-modal .modal-actions .btn span') || document.getElementById('save-btn-text');
+    const originalText = saveBtn.textContent;
+    saveBtn.innerHTML = '<span class="loading-spinner"></span>Saving...';
+
+    if (await saveProjects(list)) {
+      saveBtn.textContent = originalText;
+      closeModal();
+      refreshTable();
+      updateStats();
+      runFeedCheck();
+    } else {
+      saveBtn.textContent = originalText;
+      document.getElementById('modal-err').textContent = 'Failed to save project. Please try again.';
+    }
+  }
+
+  function editProject(i) {
+    openModal(i);
+  }
+
+  async function deleteProject(i) {
+    if (!confirm('Delete this project?')) return;
+
+    const list = projectsCache.length > 0 ? projectsCache : await getProjects();
+    list.splice(i, 1);
+
+    if (await saveProjects(list)) {
+      refreshTable();
+      updateStats();
+      runFeedCheck();
+    } else {
+      alert('Failed to delete project.');
+    }
+  }
+
+  // ============ LIVE FEED CHECK ============
+  async function runFeedCheck() {
+    const projects = await getProjects();
+    const liveProjects = projects.filter(p => p.liveUrl);
     const grid = document.getElementById('feed-grid');
-    if (projects.length === 0) {grid.innerHTML = '<p style="color:rgba(252,165,165,0.45);font-size:0.86rem;">Add projects with live URLs to see feed.</p>'; return;}
+
+    if (liveProjects.length === 0) {
+      grid.innerHTML = '<p style="color:rgba(252,165,165,0.45);font-size:0.86rem;">Add projects with live URLs to see feed.</p>';
+      return;
+    }
+
     grid.innerHTML = '';
-    projects.forEach((p, i) => {
+    liveProjects.forEach((p, i) => {
       const card = document.createElement('div');
       card.className = 'feed-card';
       card.id = 'fc-' + i;
       card.innerHTML = `<div class="fc-title">${escHtml(p.title)}</div><div class="fc-url">${escHtml(p.liveUrl)}</div><div class="feed-status"><span class="feed-dot checking"></span> Checking…</div>`;
       grid.appendChild(card);
+
       const img = new Image();
-      const timeout = setTimeout(() => {updateFeedCard(i, false); updateTableBadge(i, false);}, 7000);
-      img.onload = () => {clearTimeout(timeout); updateFeedCard(i, true); updateTableBadge(i, true);};
-      img.onerror = () => {clearTimeout(timeout); fetch(p.liveUrl, {method:'HEAD', mode:'no-cors'}).then(() => {updateFeedCard(i, true); updateTableBadge(i, true);}).catch(() => {updateFeedCard(i, false); updateTableBadge(i, false);});}
+      const timeout = setTimeout(() => {
+        updateFeedCard(i, false);
+        updateTableBadge(i, false);
+      }, 7000);
+
+      img.onload = () => {
+        clearTimeout(timeout);
+        updateFeedCard(i, true);
+        updateTableBadge(i, true);
+      };
+
+      img.onerror = () => {
+        clearTimeout(timeout);
+        fetch(p.liveUrl, { method: 'HEAD', mode: 'no-cors' })
+          .then(() => {
+            updateFeedCard(i, true);
+            updateTableBadge(i, true);
+          })
+          .catch(() => {
+            updateFeedCard(i, false);
+            updateTableBadge(i, false);
+          });
+      };
+
       img.src = p.liveUrl + '/favicon.ico?_=' + Date.now();
     });
   }
@@ -289,19 +495,29 @@
   function updateFeedCard(i, online) {
     const card = document.getElementById('fc-' + i);
     if (!card) return;
-    const dot = online ? '<span class="feed-dot online"></span>' : '<span class="feed-dot" style="background:#6b7280;"></span>';
-    const label = online ? '<span style="color:#4ade80;">Online</span>' : '<span style="color:#6b7280;">Unreachable from browser</span>';
+
+    const dot = online
+      ? '<span class="feed-dot online"></span>'
+      : '<span class="feed-dot" style="background:#6b7280;"></span>';
+    const label = online
+      ? '<span style="color:#4ade80;">Online</span>'
+      : '<span style="color:#6b7280;">Unreachable from browser</span>';
+
     card.querySelector('.feed-status').innerHTML = dot + label;
   }
 
   function updateTableBadge(i, online) {
     const el = document.getElementById('feed-badge-' + i);
     if (!el) return;
+
     el.className = online ? 'badge-online' : 'badge-offline';
     el.textContent = online ? '●  Online' : '●  Unreachable';
   }
 
-  document.getElementById('proj-modal').addEventListener('click', function(e) {if (e.target === this) closeModal();});
+  // Close modal on overlay click
+  document.getElementById('proj-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
 </script>
 </body>
 </html>
