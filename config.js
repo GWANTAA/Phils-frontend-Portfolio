@@ -1,1 +1,1 @@
-window.PORTFOLIO_API_BASE_URL = "https://philemon-portfolio-backend.onrender.com";
+window.PORTFOLIO_API_BASE_URL = "https://phils-backend-portfolio.onrender.com";
